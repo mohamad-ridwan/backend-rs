@@ -1,19 +1,11 @@
-const testimonial = require('../models/testimonial')
+const emailUser = require('../models/emailuser')
 
 // post
 exports.post = (req, res, next) => {
-    const name = req.body.name
-    const label = req.body.label
-    const image = req.body.image
-    const deskripsi = req.body.deskripsi
-    const background = req.body.background
+    const email = req.body.email
 
-    const post = new testimonial({
-        name: name,
-        label: label,
-        image: image,
-        deskripsi: deskripsi,
-        background: background
+    const post = new emailUser({
+        email: email
     })
 
     post.save()
@@ -23,20 +15,18 @@ exports.post = (req, res, next) => {
                 data: result
             })
         })
-        .catch(err => {
-            console.log(err)
-        })
+        .catch(err => console.log(err))
 }
 
 // get
 exports.get = (req, res, next) => {
     let totalItems;
 
-    testimonial.find()
+    emailUser.find()
         .countDocuments()
         .then(count => {
             totalItems = count
-            return testimonial.find()
+            return emailUser.find()
         })
         .then(result => {
             res.status(200).json({
@@ -52,14 +42,9 @@ exports.get = (req, res, next) => {
 
 // putId
 exports.putId = (req, res, next) => {
-    const name = req.body.name
-    const label = req.body.label
-    const image = req.body.image
-    const deskripsi = req.body.deskripsi
-    const background = req.body.background
-    const putId = req.params.putId
+    const email = req.body.email
 
-    testimonial.findById(putId)
+    emailUser.findById(email)
         .then(post => {
             if (!post) {
                 const err = new Error('data tidak ada')
@@ -67,11 +52,7 @@ exports.putId = (req, res, next) => {
                 throw err
             }
 
-            post.name = name
-            post.label = label
-            post.image = image
-            post.deskripsi = deskripsi
-            post.background = background
+            post.email = email
 
             return post.save()
         })
@@ -81,7 +62,5 @@ exports.putId = (req, res, next) => {
                 data: result
             })
         })
-        .catch(err => {
-            next(err)
-        })
+        .catch(err => next(err))
 }

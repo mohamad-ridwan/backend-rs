@@ -2,24 +2,21 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const testimonial = new Schema({
-    name: {
-        type: String,
-    },
-    label: {
+const general = new Schema({
+    title: {
         type: String
     },
-    image: {
+    question: {
         type: String
     },
-    deskripsi: {
+    answer: {
         type: String
     },
-    background: {
+    path: {
         type: String
     }
 }, {
     timestamps: true
 })
 
-module.exports = mongoose.model('testimonial', testimonial)
+module.exports = mongoose.model('general', general)

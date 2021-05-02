@@ -1,19 +1,19 @@
-const testimonial = require('../models/testimonial')
+const contactUs = require('../models/contactus')
 
 // post
 exports.post = (req, res, next) => {
-    const name = req.body.name
-    const label = req.body.label
-    const image = req.body.image
-    const deskripsi = req.body.deskripsi
-    const background = req.body.background
+    const nama = req.body.nama
+    const emailAddress = req.body.emailAddress
+    const phoneNumber = req.body.phoneNumber
+    const company = req.body.company
+    const message = req.body.message
 
-    const post = new testimonial({
-        name: name,
-        label: label,
-        image: image,
-        deskripsi: deskripsi,
-        background: background
+    const post = new contactUs({
+        nama: nama,
+        emailAddress: emailAddress,
+        phoneNumber: phoneNumber,
+        company: company,
+        message: message
     })
 
     post.save()
@@ -32,11 +32,11 @@ exports.post = (req, res, next) => {
 exports.get = (req, res, next) => {
     let totalItems;
 
-    testimonial.find()
+    contactUs.find()
         .countDocuments()
         .then(count => {
             totalItems = count
-            return testimonial.find()
+            return contactUs.find()
         })
         .then(result => {
             res.status(200).json({
@@ -52,14 +52,14 @@ exports.get = (req, res, next) => {
 
 // putId
 exports.putId = (req, res, next) => {
-    const name = req.body.name
-    const label = req.body.label
-    const image = req.body.image
-    const deskripsi = req.body.deskripsi
-    const background = req.body.background
+    const nama = req.body.nama
+    const emailAddress = req.body.emailAddress
+    const phoneNumber = req.body.phoneNumber
+    const company = req.body.company
+    const message = req.body.message
     const putId = req.params.putId
 
-    testimonial.findById(putId)
+    contactUs.findById(putId)
         .then(post => {
             if (!post) {
                 const err = new Error('data tidak ada')
@@ -67,11 +67,11 @@ exports.putId = (req, res, next) => {
                 throw err
             }
 
-            post.name = name
-            post.label = label
-            post.image = image
-            post.deskripsi = deskripsi
-            post.background = background
+            post.nama = nama
+            post.emailAddress = emailAddress
+            post.phoneNumber = phoneNumber
+            post.company = company
+            post.message = message
 
             return post.save()
         })

@@ -1,19 +1,17 @@
-const testimonial = require('../models/testimonial')
+const visitor_patientInformation = require('../models/visitor_patientinformation')
 
 // post
 exports.post = (req, res, next) => {
-    const name = req.body.name
-    const label = req.body.label
-    const image = req.body.image
-    const deskripsi = req.body.deskripsi
-    const background = req.body.background
+    const title = req.body.title
+    const question = req.body.question
+    const answer = req.body.answer
+    const path = req.body.path
 
-    const post = new testimonial({
-        name: name,
-        label: label,
-        image: image,
-        deskripsi: deskripsi,
-        background: background
+    const post = new visitor_patientInformation({
+        title: title,
+        question: question,
+        answer: answer,
+        path: path
     })
 
     post.save()
@@ -23,20 +21,18 @@ exports.post = (req, res, next) => {
                 data: result
             })
         })
-        .catch(err => {
-            console.log(err)
-        })
+        .catch(err => console.log(err))
 }
 
 // get
 exports.get = (req, res, next) => {
     let totalItems;
 
-    testimonial.find()
+    visitor_patientInformation.find()
         .countDocuments()
         .then(count => {
             totalItems = count
-            return testimonial.find()
+            return visitor_patientInformation.find()
         })
         .then(result => {
             res.status(200).json({
@@ -52,14 +48,13 @@ exports.get = (req, res, next) => {
 
 // putId
 exports.putId = (req, res, next) => {
-    const name = req.body.name
-    const label = req.body.label
-    const image = req.body.image
-    const deskripsi = req.body.deskripsi
-    const background = req.body.background
+    const title = req.body.title
+    const question = req.body.question
+    const answer = req.body.answer
+    const path = req.body.path
     const putId = req.params.putId
 
-    testimonial.findById(putId)
+    visitor_patientInformation.findById(putId)
         .then(post => {
             if (!post) {
                 const err = new Error('data tidak ada')
@@ -67,21 +62,18 @@ exports.putId = (req, res, next) => {
                 throw err
             }
 
-            post.name = name
-            post.label = label
-            post.image = image
-            post.deskripsi = deskripsi
-            post.background = background
+            post.title = title
+            post.question = question
+            post.answer = answer
+            post.path = path
 
             return post.save()
         })
         .then(result => {
             res.status(200).json({
-                message: 'update berhasil',
+                message: "update berhasil",
                 data: result
             })
         })
-        .catch(err => {
-            next(err)
-        })
+        .catch(err => next(err))
 }

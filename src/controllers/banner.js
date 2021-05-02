@@ -1,19 +1,19 @@
-const testimonial = require('../models/testimonial')
+const banner = require('../models/banner')
 
 // post
 exports.post = (req, res, next) => {
-    const name = req.body.name
-    const label = req.body.label
-    const image = req.body.image
+    const title = req.body.title
     const deskripsi = req.body.deskripsi
+    const image = req.body.image
     const background = req.body.background
+    const path = req.body.path
 
-    const post = new testimonial({
-        name: name,
-        label: label,
-        image: image,
+    const post = new banner({
+        title: title,
         deskripsi: deskripsi,
-        background: background
+        image: image,
+        background: background,
+        path: path
     })
 
     post.save()
@@ -23,20 +23,18 @@ exports.post = (req, res, next) => {
                 data: result
             })
         })
-        .catch(err => {
-            console.log(err)
-        })
+        .catch(err => console.log(err))
 }
 
 // get
 exports.get = (req, res, next) => {
     let totalItems;
 
-    testimonial.find()
+    banner.find()
         .countDocuments()
         .then(count => {
             totalItems = count
-            return testimonial.find()
+            return banner.find()
         })
         .then(result => {
             res.status(200).json({
@@ -52,14 +50,13 @@ exports.get = (req, res, next) => {
 
 // putId
 exports.putId = (req, res, next) => {
-    const name = req.body.name
-    const label = req.body.label
-    const image = req.body.image
+    const title = req.body.title
     const deskripsi = req.body.deskripsi
-    const background = req.body.background
+    const image = req.body.image
+    const path = req.body.path
     const putId = req.params.putId
 
-    testimonial.findById(putId)
+    banner.findById(putId)
         .then(post => {
             if (!post) {
                 const err = new Error('data tidak ada')
@@ -67,21 +64,18 @@ exports.putId = (req, res, next) => {
                 throw err
             }
 
-            post.name = name
-            post.label = label
-            post.image = image
+            post.title = title
             post.deskripsi = deskripsi
-            post.background = background
+            post.imaage = image
+            post.path = path
 
             return post.save()
         })
         .then(result => {
             res.status(200).json({
-                message: 'update berhasil',
+                message: 'berhasil update',
                 data: result
             })
         })
-        .catch(err => {
-            next(err)
-        })
+        .catch(err => next(err))
 }

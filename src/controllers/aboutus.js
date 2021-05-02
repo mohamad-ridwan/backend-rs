@@ -1,19 +1,17 @@
-const testimonial = require('../models/testimonial')
+const aboutUs = require('../models/aboutus')
 
 // post
 exports.post = (req, res, next) => {
-    const name = req.body.name
-    const label = req.body.label
+    const title = req.body.title
+    const path = req.body.path
+    const konten = req.body.konten
     const image = req.body.image
-    const deskripsi = req.body.deskripsi
-    const background = req.body.background
 
-    const post = new testimonial({
-        name: name,
-        label: label,
-        image: image,
-        deskripsi: deskripsi,
-        background: background
+    const post = new aboutUs({
+        title: title,
+        path: path,
+        konten: konten,
+        image: image
     })
 
     post.save()
@@ -23,20 +21,18 @@ exports.post = (req, res, next) => {
                 data: result
             })
         })
-        .catch(err => {
-            console.log(err)
-        })
+        .catch(err => console.log(err))
 }
 
 // get
 exports.get = (req, res, next) => {
     let totalItems;
 
-    testimonial.find()
+    aboutUs.find()
         .countDocuments()
         .then(count => {
             totalItems = count
-            return testimonial.find()
+            return aboutUs.find()
         })
         .then(result => {
             res.status(200).json({
@@ -52,14 +48,13 @@ exports.get = (req, res, next) => {
 
 // putId
 exports.putId = (req, res, next) => {
-    const name = req.body.name
-    const label = req.body.label
+    const title = req.body.title
+    const path = req.body.path
+    const konten = req.body.konten
     const image = req.body.image
-    const deskripsi = req.body.deskripsi
-    const background = req.body.background
     const putId = req.params.putId
 
-    testimonial.findById(putId)
+    aboutUs.findById(putId)
         .then(post => {
             if (!post) {
                 const err = new Error('data tidak ada')
@@ -67,11 +62,10 @@ exports.putId = (req, res, next) => {
                 throw err
             }
 
-            post.name = name
-            post.label = label
+            post.title = title
+            post.path = path
+            post.konten = konten
             post.image = image
-            post.deskripsi = deskripsi
-            post.background = background
 
             return post.save()
         })
@@ -81,7 +75,5 @@ exports.putId = (req, res, next) => {
                 data: result
             })
         })
-        .catch(err => {
-            next(err)
-        })
+        .catch(err => next(err))
 }
