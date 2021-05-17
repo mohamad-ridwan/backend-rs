@@ -25,6 +25,11 @@ const bannerRoutes = require('./src/routes/banner')
 const emailUserRoutes = require('./src/routes/emailuser')
 const onlineReservationRoutes = require('./src/routes/onlinereservation')
 const contactUsRoutes = require('./src/routes/contactus')
+const navbarRoutes = require('./src/routes/navbar')
+const footerRoutes = require('./src/routes/footer')
+const disclaimerRoutes = require('./src/routes/disclaimer')
+const publicationRoutes = require('./src/routes/publication')
+const galleryRoutes = require('./src/routes/gallery')
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -53,6 +58,7 @@ app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single(image))
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Credential", "true")
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     next();
@@ -74,6 +80,11 @@ app.use('/banner', bannerRoutes)
 app.use('/email-user', emailUserRoutes)
 app.use('/online-reservation', onlineReservationRoutes)
 app.use('/contact-us', contactUsRoutes)
+app.use('/navbar', navbarRoutes)
+app.use('/footer', footerRoutes)
+app.use('/disclaimer', disclaimerRoutes)
+app.use('/publication', publicationRoutes)
+app.use('/gallery', galleryRoutes)
 
 app.use((error, req, res, next) => {
     const status = error.errorStatus || 500;

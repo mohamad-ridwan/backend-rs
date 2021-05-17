@@ -2,18 +2,24 @@ const contactUs = require('../models/contactus')
 
 // post
 exports.post = (req, res, next) => {
+    const id = req.body.id
     const nama = req.body.nama
     const emailAddress = req.body.emailAddress
     const phoneNumber = req.body.phoneNumber
     const company = req.body.company
     const message = req.body.message
+    const noTelpRS = req.body.noTelpRS
+    const emailRS = req.body.emailRS
 
     const post = new contactUs({
+        id: id,
         nama: nama,
         emailAddress: emailAddress,
         phoneNumber: phoneNumber,
         company: company,
-        message: message
+        message: message,
+        noTelpRS: noTelpRS,
+        emailRS: emailRS
     })
 
     post.save()

@@ -3,6 +3,9 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const contactUs = new Schema({
+    id: {
+        type: String
+    },
     nama: {
         type: String
     },
@@ -16,6 +19,12 @@ const contactUs = new Schema({
         type: String
     },
     message: {
+        type: String
+    },
+    noTelpRS: {
+        type: String
+    },
+    emailRS: {
         type: String
     }
 }, {
