@@ -93,6 +93,13 @@ app.use((error, req, res, next) => {
     res.status(status).json({ message: message, data: data });
 })
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static("build"));
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "build", "index.html"))
+    })
+}
+
 const PORT = process.env.PORT || 6200
 
 mongoose.connect('mongodb+srv://ridwan:ugELM2oeKdlMmVR9@cluster0.mtciq.mongodb.net/rumahsakit?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
