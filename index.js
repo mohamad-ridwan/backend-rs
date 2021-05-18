@@ -93,7 +93,7 @@ app.use((error, req, res, next) => {
     res.status(status).json({ message: message, data: data });
 })
 
-const PORT = 6200
+const PORT = process.env.PORT || 6200
 
 mongoose.connect('mongodb+srv://ridwan:ugELM2oeKdlMmVR9@cluster0.mtciq.mongodb.net/rumahsakit?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
