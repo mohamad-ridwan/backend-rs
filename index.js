@@ -3,6 +3,9 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const multer = require('multer')
 const path = require('path')
+// const dotenv = require('dotenv').config()
+
+require('dotenv').config();
 
 const app = express();
 
@@ -100,7 +103,7 @@ app.use((error, req, res, next) => {
 //     })
 // }
 
-const PORT = process.env.PORT || 6200
+const PORT = process.env.PORT || 6235
 
 mongoose.connect('mongodb+srv://ridwan:ugELM2oeKdlMmVR9@cluster0.mtciq.mongodb.net/rumahsakit?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
