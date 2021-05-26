@@ -65,6 +65,7 @@ exports.putById = (req, res, next) => {
     const path = req.body.path
     const image = req.body.image
     const konten = req.body.konten
+    const date = `${getDate} ${arrayMonth[getMonth - 1]} ${getYear}`
     const putId = req.params.putId
 
     healthArticles.findById(putId)
@@ -79,6 +80,7 @@ exports.putById = (req, res, next) => {
             post.deskripsi = deskripsi
             post.image = image
             post.konten = konten
+            post.date = date
             post.path = path
 
             return post.save()
